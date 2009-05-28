@@ -1,0 +1,16 @@
+users:
+ development:
+  username: twitter_username
+  password: XXX
+
+ test:
+  username: twitter_username
+  password: XXX
+
+ production:
+  username: twitter_username
+  password: XXX
+  
+models:
+ - ExceptionNotifier #this would provide a twitter notification for every e-mail delivered through ExceptionNotifier (the standard notifier for the exception_notification plugin) 
+ - AdminNotifier #this would send a twitter notification for every e-mail delivered through AdminNotifier
