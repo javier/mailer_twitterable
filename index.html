@@ -1,0 +1,162 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+	"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+
+	<title>javier/mailer_twitterable @ GitHub</title>
+	
+	<style type="text/css">
+		body {
+  		margin-top: 1.0em;
+  		background-color: #044a2f;
+		  font-family: "helvetica"; 
+  		color: #ffffff;
+    }
+    #container {
+      margin: 0 auto;
+      width: 700px;
+    }
+		h1 { font-size: 3.8em; color: #fbb5d0; margin-bottom: 3px; }
+		h1 .small { font-size: 0.4em; }
+		h1 a { text-decoration: none }
+		h2 { font-size: 1.5em; color: #fbb5d0; }
+    h3 { text-align: center; color: #fbb5d0; }
+    a { color: #fbb5d0; }
+    .description { font-size: 1.2em; margin-bottom: 30px; margin-top: 30px; font-style: italic;}
+    .download { float: right; }
+		pre { background: #000; color: #fff; padding: 15px;}
+    hr { border: 0; width: 80%; border-bottom: 1px solid #aaa}
+    .footer { text-align:center; padding-top:30px; font-style: italic; }
+	</style>
+	
+</head>
+
+<body>
+  <a href="http://github.com/javier/mailer_twitterable"><img style="position: absolute; top: 0; right: 0; border: 0;" src="http://s3.amazonaws.com/github/ribbons/forkme_right_darkblue_121621.png" alt="Fork me on GitHub" /></a>
+  
+  <div id="container">
+
+    <div class="download">
+      <a href="http://github.com/javier/mailer_twitterable/zipball/master">
+        <img border="0" width="90" src="http://github.com/images/modules/download/zip.png"></a>
+      <a href="http://github.com/javier/mailer_twitterable/tarball/master">
+        <img border="0" width="90" src="http://github.com/images/modules/download/tar.png"></a>
+    </div>
+      
+    <h1><a href="http://github.com/javier/mailer_twitterable">mailer_twitterable</a> 
+      <span class="small">by <a href="http://github.com/javier">javier</a></span></h1>
+
+    <div class="description">
+      rails plugin to send twitter updates every time an ActionMailer model sends an e-mail. Only selected ActionMailer models will be twittered
+    </div>
+
+    <p>MailerTwitterable
+=================
+
+mailer_twitterable is a rails plugin to send twitter updates every time an e-mail is sent from the application.
+
+Only selected ActionMailer models will be twittered, so you can control for which messages you are going to receive updates.
+
+You can use this plugin together with ExceptionNotifier so you can get a twitter update every time your application launches an exception in production. You could also use it to trace the typical UserNotifier model and monitor the signups/signouts of your users.
+
+The plugin depends on the "twitterable" gem</p><h2>Dependencies</h2>
+<p>twitter gem</p>
+<h2>Install</h2>
+<p>Installation
+=============
+
+You can install in two ways. 
+
+	Recommended installation method: Via the provided rails template (rails >= 2.3) 
+	==================================================================
+
+	1. Execute the following rake task from your project root directory
+
+		rake rails:template LOCATION=http://github.com/javier/mailer_twitterable/raw/2b4cdefa2dbb5e5af68734ad1e93eb72c1b92b19/rails_template.rb
+
+
+	2. The template could force to install the twitter gem (and its dependencies) but if you are like me, you don't like anyone messing with your gems repository, so the template will only add the gem dependency to your environment.rb file, but you need to install it manually with the command
+
+		rake gems:install
+
+
+
+	Manual Installation
+	===================
+	
+	1. Install the twitter gem 
+	
+		(sudo) gem install twitter
+		
+	2. Install the mailer twitterable plugin 
+		(ruby) script/plugin install git://github.com/javier/mailer_twitterable.git
+		
+	3. Generate the plugin config file
+		(ruby) script/generate mailer_twitterable_yml
+		
+		
+Configuration
+==============
+
+	All the configuration from the plugin is done in the config/mailer_twitterable.yml file (automatically created by using the template, or via the generator in the manual installation).
+	
+	This file is pretty simple. 
+	
+		1. 	Introduce the user/password of the twitter account you want to use in each of your environments
+				
+		2. 	Modify, if you want, the update line that will be sent. By default it will use the timestamp in UTC and the mail subject. 
+			In evaluation time, you will have a variable named "mail" available. This is an instance of TMAIL::MAIL and you can use, for example, mail.subject or mail.to.
+			Notice the whole string is quoted with %Q() and you will have to use #{} inside it if you want to interpolate any parameters. A sample string would be
+			
+				format: "%Q(mail send to #{mail.to} at #{Time.now.utc.strftime('%Y%m%d %H%M%S')} with subject #{mail.subject})"
+			
+		3. 	Enter the name of the models you want to observe in the models array. Please note the "models:" entry in this yaml is an Array, so the model names must be preceeded by a dash, like for example
+		
+			 models:
+	 			- ExceptionNotifier  
+	 			- UserNotifier 
+
+How it works
+===============	
+	
+	The plugin intercepts every call to the "deliver" method in ActionMailer::Base. Every time a mail is delivered, the plugin checks if the current Mailer object is in the "models" array of the configuration file.
+	If the model is configured to be twitterable, a twitter message will be composed using the "format" property in your configuration file and sent as an update
+	
+	   
+
+Feel free to send any updates you consider interesting. And remember, if you liked these plugins, you can find some other interesting contributions at http://spainrb.org/projects
+
+Happy forking!
+
+</p>
+<h2>License</h2>
+<p>Copyright (c) 2009 javier ramirez (http://javier.github.com http://formatinternet.com), released under the MIT license
+</p>
+<h2>Authors</h2>
+<p>javier (javier.ramirez.gomara@gmail.com)<br/><br/>      </p>
+<h2>Contact</h2>
+<p>javier ramírez (javier.ramirez.gomara@gmail.com)<br/>      </p>
+
+
+    <h2>Download</h2>
+    <p>
+      You can download this project in either
+      <a href="http://github.com/javier/mailer_twitterable/zipball/master">zip</a> or
+      <a href="http://github.com/javier/mailer_twitterable/tarball/master">tar</a> formats.
+    </p>
+    <p>You can also clone the project with <a href="http://git-scm.com">Git</a>
+      by running:
+      <pre>$ git clone git://github.com/javier/mailer_twitterable</pre>
+    </p>
+      
+    <div class="footer">
+      get the source code on GitHub : <a href="http://github.com/javier/mailer_twitterable">javier/mailer_twitterable</a>
+    </div>
+    
+  </div>
+
+  
+</body>
+</html>
