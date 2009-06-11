@@ -1,13 +1,73 @@
 MailerTwitterable
 =================
 
-Introduction goes here.
+mailer_twitterable is a rails plugin to send twitter updates every time an e-mail is sent from the application.
+
+Only selected ActionMailer models will be twittered, so you can control for which messages you are going to receive updates.
+
+You can use this plugin together with ExceptionNotifier so you can get a twitter update every time your application launches an exception in production. You could also use it to trace the typical UserNotifier model and monitor the signups/signouts of your users.
+
+The plugin depends on the "twitterable" gem
 
 
-Example
-=======
+Installation
+=============
 
-Example goes here.
+You can install in two ways. 
+
+	Via the provided rails template (rails >= 2.3) 
+	===========================
+
+	1. Execute the following rake task from your project root directory
+
+		rake rails:template LOCATION=http://github.com/javier/mailer_twitterable/raw/2b4cdefa2dbb5e5af68734ad1e93eb72c1b92b19/rails_template.rb
 
 
-Copyright (c) 2008 [name of plugin creator], released under the MIT license
+	2. The template could force to install the twitter gem (and its dependencies) but if you are like me, you don't like anyone messing with your gems repository, so the template will only add the gem dependency to your environment.rb file, but you need to install it manually with the commands
+
+		rake gems:install
+
+
+	Manual Installation
+	===================
+	
+	1. Install the twitter gem 
+	
+		(sudo) gem install twitter
+		
+	2. Install the mailer twitterable plugin 
+		(ruby) script/plugin install git://github.com/javier/mailer_twitterable.git
+		
+	3. Generate the plugin config file
+		(ruby) script/generate mailer_twitterable_yml
+		
+		
+Configuration
+==============
+
+	All the configuration from the plugin is done in the config/mailer_twitterable.yml file (automatically created by using the template, or via the generator in the manual installation).
+	
+	This file is pretty simple. 
+	
+		1. 	Introduce the user/password of the twitter account you want to use in each of your environments
+				
+		2. 	Modify, if you want, the update line that will be sent. By default it will use the timestamp in UTC and the mail subject. 
+			In evaluation time, you will have a variable named "mail" available. This is an instance of TMAIL::MAIL and you can use, for example, mail.subject or mail.to.
+			Notice the whole string is quoted with %Q() and you will have to use #{} inside it if you want to interpolate any parameters. A sample string would be
+			
+				format: "%Q(mail send to #{mail.to} at #{Time.now.utc.strftime('%Y%m%d %H%M%S')} with subject #{mail.subject})"
+			
+		3. 	Enter the name of the models you want to observe in the models array. Please note the "models:" entry in this yaml is an Array, so the model names must be preceeded by a dash, like for example
+		
+			 models:
+	 			- ExceptionNotifier  
+	 			- UserNotifier 
+	
+	
+How it works
+===============	
+	
+	The plugin intercepts every call to the "deliver" method in ActionMailer::Base. Every time a mail is delivered, the plugin checks if the current Mailer object is in the "models" array of the configuration file.
+	If the model is configured to be twitterable, a twitter message will be composed using the "format" property in your configuration file and sent as an update   
+
+Copyright (c) 2009 javier ramirez (http://javier.github.com http://formatinternet.com), released under the MIT license

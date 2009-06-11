@@ -14,6 +14,10 @@ class MailerTwitterable
     self.config['users'][RAILS_ENV]['password'] rescue nil
   end
   
+  def self.format
+    self.config['users'][RAILS_ENV]['format'] rescue nil
+  end
+  
   def self.models
     self.config['models'] rescue []
   end

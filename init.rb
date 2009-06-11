@@ -11,13 +11,13 @@ ActionMailer::Base.class_eval do
     def deliver_with_twitterable!(mail=@mail)
       begin        
         if MailerTwitterable.models.include?(self.class.to_s)          
-          unless MailerTwitterable.user.blank? || MailerTwitterable.password.blank?            
+          unless MailerTwitterable.user.blank? || MailerTwitterable.password.blank? || MailerTwitterable.format.blank?            
             twit=Twitter::Base.new MailerTwitterable.user, MailerTwitterable.password
-            twit.update "#{Time.now.utc.strftime('%Y%m%d %H%M%S')} #{mail.subject}"
+            twit.update eval(MailerTwitterable.format) 
           end
         end
-      rescue
-        nil
+      rescue        
+        nil #just do nothing. We don't want to cancel the mail sending only because of not updating in twitter
       end
       deliver_without_twitterable!   
     end
