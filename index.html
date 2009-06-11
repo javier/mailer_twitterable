@@ -52,85 +52,95 @@
       rails plugin to send twitter updates every time an ActionMailer model sends an e-mail. Only selected ActionMailer models will be twittered
     </div>
 
-    <p>MailerTwitterable
-=================
+    <h2>MailerTwitterable</h2>
+    <p>=================</p>
 
-mailer_twitterable is a rails plugin to send twitter updates every time an e-mail is sent from the application.
+<p>mailer_twitterable is a rails plugin to send twitter updates every time an e-mail is sent from the application.</p>
 
-Only selected ActionMailer models will be twittered, so you can control for which messages you are going to receive updates.
+<p>Only selected ActionMailer models will be twittered, so you can control for which messages you are going to receive updates.</p>
 
-You can use this plugin together with ExceptionNotifier so you can get a twitter update every time your application launches an exception in production. You could also use it to trace the typical UserNotifier model and monitor the signups/signouts of your users.
+<p>You can use this plugin together with ExceptionNotifier so you can get a twitter update every time your application launches an exception in production. You could also use it to trace the typical UserNotifier model and monitor the signups/signouts of your users.</p>
 
-The plugin depends on the "twitterable" gem</p><h2>Dependencies</h2>
+<p>The plugin depends on the "twitterable" gem</p>
+<p><h2>Dependencies</h2></p>
 <p>twitter gem</p>
-<h2>Install</h2>
-<p>Installation
-=============
+<p><h2>Install</h2></p>
+<p<h3>Installation</h3></p>
+<p>=============</p>
 
-You can install in two ways. 
+<p>You can install in two ways. </p>
 
-	Recommended installation method: Via the provided rails template (rails >= 2.3) 
-	==================================================================
+	<p>Recommended installation method: Via the provided rails template (rails >= 2.3) </p>
+	<p>==================================================================</p>
 
-	1. Execute the following rake task from your project root directory
+	<p>1. Execute the following rake task from your project root directory<BR/>
 
 		rake rails:template LOCATION=http://github.com/javier/mailer_twitterable/raw/2b4cdefa2dbb5e5af68734ad1e93eb72c1b92b19/rails_template.rb
+	</p>
 
-
+	<p>
 	2. The template could force to install the twitter gem (and its dependencies) but if you are like me, you don't like anyone messing with your gems repository, so the template will only add the gem dependency to your environment.rb file, but you need to install it manually with the command
-
+	<BR/>
 		rake gems:install
+	</p>
 
-
-
-	Manual Installation
-	===================
+	<p>Manual Installation</p>
+	<p>===================</p>
 	
-	1. Install the twitter gem 
-	
+	<p>1. Install the twitter gem 
+		<BR/>
 		(sudo) gem install twitter
-		
-	2. Install the mailer twitterable plugin 
+	</p>
+	
+	<p>	
+	2. Install the mailer twitterable plugin <BR/>
 		(ruby) script/plugin install git://github.com/javier/mailer_twitterable.git
-		
-	3. Generate the plugin config file
+	</p>	
+	<p>
+	3. Generate the plugin config file<BR/>
 		(ruby) script/generate mailer_twitterable_yml
+	</p>	
 		
-		
-Configuration
-==============
+<p>Configuration</p>
+<p>==============</p>
 
-	All the configuration from the plugin is done in the config/mailer_twitterable.yml file (automatically created by using the template, or via the generator in the manual installation).
+<p>All the configuration from the plugin is done in the config/mailer_twitterable.yml file (automatically created by using the template, or via the generator in the manual installation).</p>
 	
-	This file is pretty simple. 
+	<p>This file is pretty simple. </p>
 	
+		<p>
 		1. 	Introduce the user/password of the twitter account you want to use in each of your environments
+		</p>
+		<p>
 				
 		2. 	Modify, if you want, the update line that will be sent. By default it will use the timestamp in UTC and the mail subject. 
-			In evaluation time, you will have a variable named "mail" available. This is an instance of TMAIL::MAIL and you can use, for example, mail.subject or mail.to.
-			Notice the whole string is quoted with %Q() and you will have to use #{} inside it if you want to interpolate any parameters. A sample string would be
-			
-				format: "%Q(mail send to #{mail.to} at #{Time.now.utc.strftime('%Y%m%d %H%M%S')} with subject #{mail.subject})"
-			
-		3. 	Enter the name of the models you want to observe in the models array. Please note the "models:" entry in this yaml is an Array, so the model names must be preceeded by a dash, like for example
-		
-			 models:
-	 			- ExceptionNotifier  
-	 			- UserNotifier 
+		<BR/>	In evaluation time, you will have a variable named "mail" available. This is an instance of TMAIL::MAIL and you can use, for example, mail.subject or mail.to.
+		<BR/>	Notice the whole string is quoted with %Q() and you will have to use #{} inside it if you want to interpolate any parameters. A sample string would be
+		<BR/>	
+		<BR/>		format: "%Q(mail send to #{mail.to} at #{Time.now.utc.strftime('%Y%m%d %H%M%S')} with subject #{mail.subject})"
+		</p>
 
-How it works
-===============	
-	
+		<p>			
+		3. 	Enter the name of the models you want to observe in the models array. Please note the "models:" entry in this yaml is an Array, so the model names must be preceeded by a dash, like for example
+		<BR/>
+			 models:
+	 	<BR/>		- ExceptionNotifier  
+	 	<BR/>		- UserNotifier 
+		</p>
+
+<p>How it works</p>
+<p>===============</p>
+<p>	
 	The plugin intercepts every call to the "deliver" method in ActionMailer::Base. Every time a mail is delivered, the plugin checks if the current Mailer object is in the "models" array of the configuration file.
-	If the model is configured to be twitterable, a twitter message will be composed using the "format" property in your configuration file and sent as an update
-	
+<BR/>	If the model is configured to be twitterable, a twitter message will be composed using the "format" property in your configuration file and sent as an update
+</p>	
 	   
 
-Feel free to send any updates you consider interesting. And remember, if you liked these plugins, you can find some other interesting contributions at http://spainrb.org/projects
+<p>Feel free to send any updates you consider interesting. And remember, if you liked these plugins, you can find some other interesting contributions at http://spainrb.org/projects</p>
 
-Happy forking!
+<p>Happy forking!</p>
 
-</p>
+
 <h2>License</h2>
 <p>Copyright (c) 2009 javier ramirez (http://javier.github.com http://formatinternet.com), released under the MIT license
 </p>
@@ -157,6 +167,15 @@ Happy forking!
     
   </div>
 
+<script type="text/javascript">
+var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
+document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
+</script>
+<script type="text/javascript">
+try {
+var pageTracker = _gat._getTracker("UA-9284127-1");
+pageTracker._trackPageview();
+} catch(err) {}</script>
   
 </body>
 </html>
