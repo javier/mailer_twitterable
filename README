@@ -15,17 +15,18 @@ Installation
 
 You can install in two ways. 
 
-	Via the provided rails template (rails >= 2.3) 
-	===========================
+	Recommended installation method: Via the provided rails template (rails >= 2.3) 
+	==================================================================
 
 	1. Execute the following rake task from your project root directory
 
 		rake rails:template LOCATION=http://github.com/javier/mailer_twitterable/raw/2b4cdefa2dbb5e5af68734ad1e93eb72c1b92b19/rails_template.rb
 
 
-	2. The template could force to install the twitter gem (and its dependencies) but if you are like me, you don't like anyone messing with your gems repository, so the template will only add the gem dependency to your environment.rb file, but you need to install it manually with the commands
+	2. The template could force to install the twitter gem (and its dependencies) but if you are like me, you don't like anyone messing with your gems repository, so the template will only add the gem dependency to your environment.rb file, but you need to install it manually with the command
 
 		rake gems:install
+
 
 
 	Manual Installation
@@ -68,6 +69,12 @@ How it works
 ===============	
 	
 	The plugin intercepts every call to the "deliver" method in ActionMailer::Base. Every time a mail is delivered, the plugin checks if the current Mailer object is in the "models" array of the configuration file.
-	If the model is configured to be twitterable, a twitter message will be composed using the "format" property in your configuration file and sent as an update   
+	If the model is configured to be twitterable, a twitter message will be composed using the "format" property in your configuration file and sent as an update
+	
+	   
+
+Feel free to send any updates you consider interesting. And remember, if you liked these plugins, you can find some other interesting contributions at http://spainrb.org/projects
+
+Happy forking!
 
 Copyright (c) 2009 javier ramirez (http://javier.github.com http://formatinternet.com), released under the MIT license
