@@ -20,7 +20,7 @@ You can install in two ways.
 
 	1. Execute the following rake task from your project root directory
 
-		rake rails:template LOCATION=http://github.com/javier/mailer_twitterable/raw/2b4cdefa2dbb5e5af68734ad1e93eb72c1b92b19/rails_template.rb
+		rake rails:template LOCATION=http://github.com/javier/mailer_twitterable/raw/a7b796a69165c4ef68215aa91630ee2897da0c8a/rails_template.rb
 
 
 	2. The template could force to install the twitter gem (and its dependencies) but if you are like me, you don't like anyone messing with your gems repository, so the template will only add the gem dependency to your environment.rb file, but you need to install it manually with the command
