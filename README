@@ -7,7 +7,7 @@ Only selected ActionMailer models will be twittered, so you can control for whic
 
 You can use this plugin together with ExceptionNotifier so you can get a twitter update every time your application launches an exception in production. You could also use it to trace the typical UserNotifier model and monitor the signups/signouts of your users.
 
-The plugin depends on the "twitterable" gem
+The plugin depends on the "twitter" gem
 
 
 Installation
